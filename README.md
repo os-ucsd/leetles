@@ -9,6 +9,10 @@ Description Coming Soon
 Coming Soon
 ```
 
+## Project Architecture Diagram
+![alt text](https://github.com/os-ucsd/leetles/blob/updated-readme-with-architecture-diagram/LeetlesArchitectureDiagram.jpeg?raw=true)
+
+
 ## Github Stuff
 ![Check Status](https://img.shields.io/github/checks-status/os-ucsd/leetles/main)
 
