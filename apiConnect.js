@@ -38,6 +38,7 @@ function updateSigninStatus(isSignedIn) {
     } else {
         authorizeButton.style.display = 'block';
         signoutButton.style.display = 'none';
+        clearContent('content');
     }
 }
 
@@ -70,12 +71,24 @@ function initClient() {
  *
  * @param {string} message Text to be placed in pre element.
  */
-function appendPre(message) {
-    var pre = document.getElementById('content');
+function appendPre(id, message) {
+    var pre = document.getElementById(id);
     var textContent = document.createTextNode(message + '\n');
     pre.appendChild(textContent);
 }
 
+/**
+ * Clears all child nodes within a tag, essentially clearing the
+ * content.
+ * 
+ * @param {string} id The ID of the tag to be cleared
+ */
+function clearContent(id){
+  var content = document.getElementById(id);
+  while(content.hasChildNodes()){
+    content.removeChild(content.firstChild);
+  }
+}
 /**
  *  On load, called to load the auth2 library and API client library.
  */
@@ -98,7 +111,7 @@ function listUpcomingEvents() {
     'orderBy': 'startTime'
   }).then(function(response) {
     var events = response.result.items;
-    appendPre('Upcoming events:');
+    appendPre('content', 'Upcoming events:');
 
     if (events.length > 0) {
       for (i = 0; i < events.length; i++) {
@@ -107,10 +120,10 @@ function listUpcomingEvents() {
         if (!when) {
           when = event.start.date;
         }
-        appendPre(event.summary + ' (' + when + ')')
+        appendPre('content', event.summary + ' (' + when + ')')
       }
     } else {
-      appendPre('No upcoming events found.');
+      appendPre('content', 'No upcoming events found.');
     }
   });
 }
