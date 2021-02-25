@@ -112,7 +112,7 @@ function listUpcomingEvents() {
   }).then(function(response) {
     var events = response.result.items;
     appendPre('content', 'Upcoming events:');
-
+    
     if (events.length > 0) {
       for (i = 0; i < events.length; i++) {
         var event = events[i];
