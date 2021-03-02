@@ -11,6 +11,11 @@ var SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 
 var authorizeButton = document.getElementById('authorize_button');
 var signoutButton = document.getElementById('signout_button');
+var authorized = false;
+
+function main(){
+  listUpcomingEvents();
+}
 
 /**
  *  Sign in the user upon button click.
@@ -32,19 +37,21 @@ function handleSignoutClick(event) {
  */
 function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
-        authorizeButton.style.display = 'none';
-        signoutButton.style.display = 'block';
-        listUpcomingEvents();
+      authorized = true;
+      authorizeButton.style.display = 'none';
+      signoutButton.style.display = 'block';
+      // listUpcomingEvents();
     } else {
-        authorizeButton.style.display = 'block';
-        signoutButton.style.display = 'none';
-        clearContent('content');
+      authorized = false;
+      authorizeButton.style.display = 'block';
+      signoutButton.style.display = 'none';
+      clearContent('content');
     }
 }
 
 /**
  *  Initializes the API client library and sets up sign-in state
- *  listeners.
+ *  listeners.--------------------------------------
  */
 function initClient() {
     gapi.client.init({
@@ -102,7 +109,7 @@ function handleClientLoad() {
  * appropriate message is printed.
  */
 function listUpcomingEvents() {
-  gapi.client.calendar.events.list({
+  return gapi.client.calendar.events.list({
     'calendarId': 'primary',
     'timeMin': (new Date()).toISOString(),
     'showDeleted': false,
@@ -112,7 +119,7 @@ function listUpcomingEvents() {
   }).then(function(response) {
     var events = response.result.items;
     appendPre('content', 'Upcoming events:');
-    
+  
     if (events.length > 0) {
       for (i = 0; i < events.length; i++) {
         var event = events[i];
@@ -125,5 +132,15 @@ function listUpcomingEvents() {
     } else {
       appendPre('content', 'No upcoming events found.');
     }
+  });
+}
+
+function newCalendar(name){
+  gapi.client.calendar.calendars.insert({
+    "resource":{
+      "summary":name
+    }
+  }).then(function(res){
+    console.log(res);
   });
 }

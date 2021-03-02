@@ -7,18 +7,20 @@
   <body>
     <h3>Leetle's Advanced Calendar</h3>
     <p>Alpha v0.0.1</p>
-
+    
     <!--Add buttons to initiate auth sequence and sign out-->
     <button id="authorize_button" style="display: none;">Authorize</button>
     <button id="signout_button" style="display: none;">Sign Out</button>
-
-    <pre id="content" style="white-space: pre-wrap;"></pre>
-    <iframe src="https://calendar.google.com/calendar/embed?src=c_ndoim8slc81k7k0i50550lh5mc%40group.calendar.google.com&ctz=America%2FChicago" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
     
-    <script type="text/javascript" src="apiConnect.js"></script>
-    <script async defer src="https://apis.google.com/js/api.js"
-      onload="this.onload=function(){};handleClientLoad()"
-      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    <pre id="content" style="white-space: pre-wrap;"></pre>
+    <!-- <iframe id="dispCal" src="https://calendar.google.com/calendar/embed?src=c_ndoim8slc81k7k0i50550lh5mc%40group.calendar.google.com&ctz=America%2FChicago" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe> -->
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://apis.google.com/js/api.js">
+    </script>
+    <script defer type="text/javascript" src="apiConnect.js" 
+      onload="this.onload=function(){};handleClientLoad();"
+      onreadystatechange="if (this.readyState === 'complete') this.onload();">
     </script>
   </body>
 </html>
