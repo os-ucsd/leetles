@@ -24,6 +24,34 @@ button {
   justify-content: space-between;
 }
 
+#changeMonth{
+  padding-right: 25%;
+  display:flex;
+  padding-top: 0.75rem;
+}
+#control-btns{
+  display:flex;
+  height: 1.5em;
+}
+
+#back-btn:hover{
+  background-color: rgba(245, 244, 244, 0.25);
+  border-radius: 5px;
+  padding: 0.2em;
+}
+#front-btn:hover{
+  background-color: rgba(245, 244, 244, 0.25);
+  border-radius: 5px;
+  padding: 0.2em;
+}
+
+
+#monthDisplay{
+  color:white;
+  padding-left: 1rem;
+  width: 15em;
+}
+
 #container-btn{
   padding-left: 1em;
   padding-right: 1em;
@@ -36,11 +64,22 @@ button {
 #profile-btn{
   width: 3em;
   height: 3em;
+  padding-left: 1em;
+  padding-right: 1em;
+  align-items: center;
+  text-align: center;
+  vertical-align: center;
+  padding-bottom:0.5em;
 }
 
 #menu-btn{
   width: 2.5em;
   height:2.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  align-items: center;
+  text-align: center;
+  vertical-align: center;
 }
 
 #container{
@@ -54,7 +93,7 @@ button {
 
 #container-main{
   display:flex;
-  height:100%;
+  margin:auto;
 }
 
 #container-sidebar{
@@ -111,12 +150,12 @@ button {
 }
 
 #weekday-box{
+  height:2.25em;
   width: 14.28%;
   border: 1.5px solid #A0A0A0;
   background-color: #C4C4C4;
-  align-items: center;
-  text-align: center;
-  height:4rem;
+  padding-top: 0.5em;
+  
 }
 
 #calendar {
@@ -126,7 +165,7 @@ button {
 }
 .day {
   width: 14.28%;
-  height: 8.1rem;
+  height: 8.2rem;
   cursor: pointer;
   box-sizing: border-box;
   background-color: white;
@@ -134,13 +173,15 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  text-align: center;
 }
 .day:hover {
   background-color: #f5f4f4;
 }
 
 .day + #currentDay {
-  background-color:#e8f4fa;
+  background-color:rgb(196, 196, 196, 0.4);
+  color: #2E4756;
 }
 .event {
   font-size: 10px;

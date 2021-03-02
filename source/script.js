@@ -8,6 +8,10 @@ const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Frida
 function load(){
     const dt = new Date();
 
+    if (nav!=0){
+        dt.setMonth(new Date().getMonth() + nav);
+    }
+
     const day = dt.getDate();
     const month = dt.getMonth();
     const year = dt.getFullYear();
@@ -23,7 +27,10 @@ function load(){
     });
     
     const paddingDays = weekdays.indexOf(dateString.split(', ')[0]);
-    console.log(daysInMonth);
+    
+    document.getElementById('monthDisplay').innerText = `${dt.toLocaleDateString('en-us', {month:'long'})} ${year}`;
+
+    calendar.innerHTML = '';
 
     for(let i = 1; i <= paddingDays + daysInMonth; i++){
         const daySquare = document.createElement('div');
@@ -31,6 +38,10 @@ function load(){
 
         if (i > paddingDays){
             daySquare.innerText = i - paddingDays;
+
+            if(i - paddingDays === day && nav === 0) {
+                daySquare.id = 'currentDay';
+            }
         }else{
             daySquare.classList.add('padding');
         }
@@ -39,5 +50,18 @@ function load(){
     }
 }
 
+function initButtons(){
+    document.getElementById("front-btn").addEventListener('click', ()=>{
+        nav++;
+        load();
+    });
+
+    document.getElementById("back-btn").addEventListener('click', ()=>{
+        nav--;
+        load();
+    });
+}
+
+initButtons();
 load();
 
