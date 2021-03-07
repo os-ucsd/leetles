@@ -1,4 +1,4 @@
-# Git + Calendar Collab
+# Advanced Calendar
 
 ```
 Description Coming Soon
@@ -10,7 +10,7 @@ Coming Soon
 ```
 
 ## Project Architecture Diagram
-![alt text](https://github.com/os-ucsd/leetles/blob/updated-readme-with-architecture-diagram/LeetlesArchitectureDiagram.jpeg?raw=true)
+![alt text](LeetlesArchitectureDiagram.jpeg)
 
 
 ## Github Stuff
