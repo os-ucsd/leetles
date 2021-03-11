@@ -8,9 +8,56 @@ class ApiHandler{
 
     constructor(){
         this.#handleClientLoad();
-        document.getElementById('authorize_button').addEventListener('click', this.authClick);
-        document.getElementById('signout_button').addEventListener('click', this.signOutClick);
+        document.getElementById('profile-btn').addEventListener('click', this.authClick);
+        // document.getElementById('signout_button').addEventListener('click', this.signOutClick);
         this.finished("Constructor");
+    }
+
+    /**
+     * Gets the div of the day with the specified dayId
+     * 
+     * @param {string} dayId Day ID
+     * 
+     * @returns The div with the dayId provided
+     */
+    static getDayDiv(dayId){
+        var days = document.getElementById('calendar').childNodes;
+        for(var i = 1; i < days.length; i++){
+            if(days[i].attributes[1].value != undefined){
+                if(days[i].attributes[1].value == dayId){
+                    return days[i];
+                }
+            }
+        }
+    }
+
+    /**
+     * Gets value of specific key from cookies
+     * 
+     * @param {string} key Key to find
+     * 
+     * @returns Value of key
+     */
+    static getCookie(cookie, key){
+        let keyval = cookie.split('; ').find(elem => elem.startsWith(`${key}`))
+        return keyval.split('=')[1];
+    }
+
+    /**
+     * Formats a date according to RFC3339 for Google API
+     * 
+     * @param {Date} d A Date object
+     * 
+     * @returns RFC3339 datetime string
+     */
+    static ISODateString(d){
+        function pad(n){return n<10 ? '0'+n : n}
+        return d.getUTCFullYear()+'-'
+             + pad(d.getUTCMonth()+1)+'-'
+             + pad(d.getUTCDate())+'T'
+             + pad(d.getUTCHours())+':'
+             + pad(d.getUTCMinutes())+':'
+             + pad(d.getUTCSeconds())+'Z';
     }
 
     /**
@@ -37,9 +84,9 @@ class ApiHandler{
      * @param {*} text Text for text node
      */
     static appendText(id, text){
-        let elem = document.getElementById(id);
+        let day = ApiHandler.getDayDiv(id);
         let textNode = document.createTextNode(text);
-        elem.appendChild(textNode);
+        day.appendChild(textNode);
     }
 
     /**
@@ -73,13 +120,15 @@ class ApiHandler{
         console.log("Authorization");
         this.auth = gapi.auth2.getAuthInstance();
 
-        this.auth.signIn().then(() => {
-            ApiHandler.getUserDetails(this.auth);
+        this.auth.signIn();
+        
+        // .then(() => {
+        //     ApiHandler.getUserDetails(this.auth);
 
-            document.getElementById('authorize_button').style.display = "none";
-            document.getElementById('signout_button').style.display = "block";
-            ApiHandler.#changeDisplay('functionality', 'block');
-        });
+        //     // document.getElementById('profile-btn').style.display = "none";
+        //     // document.getElementById('signout_button').style.display = "block";
+        //     // ApiHandler.#changeDisplay('functionality', 'block');
+        // });
     }
 
     /**

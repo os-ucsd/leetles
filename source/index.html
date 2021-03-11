@@ -23,13 +23,15 @@
                 <div id="monthDisplay"></div>
             </div>
             <div id="container-btn">
-                <input id ="profile-btn" type="image" src="./images/profile.png">
+                <input id="profile-btn" type="image" src="./images/profile.png">
+                <input type="button" id="ins-cal" value="Insert Calendar">
+                <input type="button" id="update" value="Update">
             </div>
         </div>
         <div id="container-main">
             <div id="container-sidebar">
                 <div id="addtask-container">
-                    <button id="add-task-btn">+ Create</button>
+                    <button id="add-task-btn" onclick="document.getElementById('addEvent').style.display = 'block';">+ Create</button>
                 </div>
                 <div id="project-text">
                     <h3 id="project-title">Project Title</h3>
@@ -65,7 +67,36 @@
             </div>
         </div>
     </div>
+
+    <div id="addEvent" class="modal-event">
+        <div class="modal-content-event">
+            <div class="modal-text">
+                <div class="heading">
+                    Add Event
+                </div>
+                <form id="add-event" onsubmit="createEvent(); document.getElementById('addEvent').style.display = 'none';">
+                    <input type="text" id="summary">
+                    <input type="datetime-local" id="start-time">
+                    <input type="datetime-local" id="end-time">
+                    <input type="submit" id="submitEvent">
+                </form>
+                <div id="add-button"><button id="add-button">Add</button></div>
+            </div>
+        </div>
+    </div>
     
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script type="text/javascript" src="../js/apiHandler.js" onload="new ApiHandler();"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-firestore.js"></script>
+    <script type="text/javascript" src="../js/gCal.js"></script>
     <script src="./script.js"></script>
+    <script src="../js/db.js"></script>
 </body>
 </html>
