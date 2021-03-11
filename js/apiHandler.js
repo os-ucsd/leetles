@@ -20,13 +20,14 @@ class ApiHandler{
      * 
      * @returns The div with the dayId provided
      */
-    static getDayDiv(dayId){
+    static getDayDiv(dayId, pD){
         var days = document.getElementById('calendar').childNodes;
-        for(var i = 1; i < days.length; i++){
-            if(days[i].attributes[1].value != undefined){
-                if(days[i].attributes[1].value == dayId){
-                    return days[i];
-                }
+        console.log(days);
+        for(var i = pD; i < days.length; i++){
+            console.log(i);
+            console.log(days[i]);
+            if(days[i].attributes[1].value == dayId){
+                return days[i];
             }
         }
     }
@@ -83,10 +84,9 @@ class ApiHandler{
      * @param {*} id ID of element to add child to
      * @param {*} text Text for text node
      */
-    static appendText(id, text){
-        let day = ApiHandler.getDayDiv(id);
+    static appendText(div, text){
         let textNode = document.createTextNode(text);
-        day.appendChild(textNode);
+        div.appendChild(textNode);
     }
 
     /**

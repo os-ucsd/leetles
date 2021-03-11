@@ -31,6 +31,27 @@ function createEvent(){
     document.getElementById('addEvent').style.display = 'none';
 }
 
+function getFirstDay(month, year){
+    return new Date(year, month, 1);
+}
+
+function getDaysInMonth(month, year){
+    return new Date(year, month+1, 0).getDate();   
+}
+
+function getDateString(date){
+    return date.toLocaleDateString('en-us', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+    });
+}
+
+function getPaddingDays(ds){
+    return weekdays.indexOf(ds.split(', ')[0]);
+}
+
 function load(){
     const dt = new Date();
 
@@ -42,17 +63,12 @@ function load(){
     const month = dt.getMonth();
     const year = dt.getFullYear();
 
-    const firstDayOfMonth = new Date(year, month, 1);
-    const daysInMonth = new Date(year, month+1, 0).getDate();
+    const firstDayOfMonth = getFirstDay(month, year);
+    const daysInMonth = getDaysInMonth(month, year);
 
-    const dateString = firstDayOfMonth.toLocaleDateString('en-us', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric',
-    });
-    
-    const paddingDays = weekdays.indexOf(dateString.split(', ')[0]);
+    const dateString = getDateString(firstDayOfMonth);
+
+    const paddingDays = getPaddingDays(dateString);
     
     let header = document.getElementById('monthDisplay');
     header.innerText = `${dt.toLocaleDateString('en-us', {month:'long'})} ${year}`;
@@ -84,20 +100,23 @@ async function updateCalendar(){
     var month = Number(document.getElementById('monthDisplay').attributes[1].value);
     var year = document.getElementById('monthDisplay').attributes['data-yearId'].value;
     console.log(month + "     " + year);
-    var calId = ApiHandler.getCookie(document.cookie, 'calendarId');
 
+    var firstDay = getFirstDay(month, year);
+    var paddingDays = getPaddingDays(getDateString(firstDay));
+
+    var calId = ApiHandler.getCookie(document.cookie, 'calendarId');
     // asyncronicity of getEventsFromDay is the problem
-    for(let i = 1; i < 32; i++){
-        // var dayDiv = ApiHandler.getDayDiv(i);
+    for(let i = 1; i <= getDaysInMonth(month, year); i++){
+        var dayDiv = ApiHandler.getDayDiv(i, paddingDays);
         await getEventsFromDay(calId, i, month, year).then((res) => {
-            console.log(i)
+            console.log(i);
             console.log(res);
             var events = res.result.items;
             if(events.length == 0){
-                ApiHandler.appendText(i, "None!");
+                ApiHandler.appendText(dayDiv, "None!");
             }else{
                 for(let j = 0; j < res.result.items.length; j++){
-                    ApiHandler.appendText(i, `\n${events[j].summary}\n`);
+                    ApiHandler.appendText(dayDiv, `\n${events[j].summary}\n`);
                 }
             }
         });
